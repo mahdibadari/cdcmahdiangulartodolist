@@ -1,0 +1,43 @@
+<h2>My ToDo List</h2>
+<div>
+    <form [formGroup]="todoForm">
+    <label>
+        Description: <input formControlName="descriptionField" #description maxlength="25" required/>
+      </label>
+      <label>
+          Deadline: <input formControlName="deadlineField" type="date" #deadline required/>
+        </label>
+      <label>
+      </label>
+    <button (click)="add(description.value, deadline.value);">
+      add
+    </button>
+  </form>
+  <br/>
+  <span style="color: red;">{{descriptionError}}</span>
+</div>
+<br/>
+<table>
+  <tr>
+    <th id="todoid">ID</th>
+    <th id="tododesc">Description</th>
+    <th id="tododeadline">Deadline</th>
+    <th id="todostatus">Done</th>
+    <th id="tododelete">Delete</th>
+  </tr>
+  <tr *ngFor="let todo of todoList" >
+    <td><a routerLink="/tododetail/{{todo.id}}">
+      <span>
+        {{todo.id}}
+      </span>
+    </a></td>
+    <td>{{todo.description}}</td>
+    <td>{{todo.deadline | date: "dd MMMM y"}}</td>
+    <td><input type="checkbox" [(ngModel)]="todo.done" (change)="updateStatus(todo,$event)"/></td>
+    <td><button class="delete" title="delete todo" (click)="delete(todo)">x</button></td>
+  </tr>
+</table>
+<button (click)="sortToDoListByLatest()" >Sort to last deadline</button>
+<button (click)="sortToDoListByEarliest()" >Sort to first deadline</button>
+
+

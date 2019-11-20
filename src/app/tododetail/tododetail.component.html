@@ -1,0 +1,22 @@
+<div *ngIf="todo">
+  <br/>
+  <div><span>id: </span>{{todo.id}}</div>
+  <div>
+    <label>description:
+      <input [(ngModel)]="todo.description" placeholder="name" required maxlength="25"/>
+    </label>
+    <br/>
+    <label>deadline:
+      <input [(ngModel)]="todo.formattedDeadline" type="date" required placeholder="yyyy-mm-dd"/>
+    </label>
+    <br/>
+    <label>done:
+      <input [(ngModel)]="todo.done" type="checkbox"/>
+    </label>
+  </div>
+  <span style="color: red;">{{descriptionError}}</span>
+  <br/>
+  <br/>
+  <button (click)="save()">save</button><br/>
+  <button (click)="goBack()">go back</button>
+</div>
