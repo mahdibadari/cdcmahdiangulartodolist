@@ -1,9 +1,9 @@
 import { FormsModule } from '@angular/forms';
-import { TodoService } from './../todo.service';
-import { MessageService } from './../message.service';
+import { TodoService } from '../service/todo.service';
+import { MessageService } from '../service/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
-import { ToDo } from '../todo';
+import { ToDo } from '../model/todo';
 
 @Component({
   selector: 'app-todo',

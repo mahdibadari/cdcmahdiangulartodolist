@@ -1,4 +1,4 @@
-import { Credential } from './credential';
+import { Credential } from '../model/credential';
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -6,7 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { DatePipe } from '@angular/common';
 
-import {environment} from './helpers/enviroment';
+import {environment} from '../helpers/enviroment';
 
 
 @Injectable({

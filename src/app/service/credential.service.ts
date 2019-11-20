@@ -1,5 +1,5 @@
-import { Credential } from './credential';
-import { environment } from './helpers/enviroment';
+import { Credential } from '../model/credential';
+import { environment } from '../helpers/enviroment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 

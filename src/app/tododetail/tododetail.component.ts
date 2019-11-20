@@ -1,8 +1,8 @@
-import { TodoService } from './../todo.service';
+import { TodoService } from '../service/todo.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ToDo } from '../todo';
+import { ToDo } from '../model/todo';
 import { DatePipe } from '@angular/common';
 
 @Component({
