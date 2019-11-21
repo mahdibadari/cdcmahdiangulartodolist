@@ -1,4 +1,8 @@
+import { AuthService } from './../service/auth.service';
+import { CredentialService } from './../service/credential.service';
+import { Credential } from './../model/credential';
 import { Component, OnInit } from '@angular/core';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,10 +10,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
-  constructor() { }
+  loading = false;
+  users: Credential[];
+  constructor(private credentialService: CredentialService) { }
 
   ngOnInit() {
+    this.loading = true;
+    this.credentialService.getAll().pipe(first()).subscribe(users => {
+      this.loading = false;
+      this.users = users;
+    });
   }
 
 }
