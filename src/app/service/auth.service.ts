@@ -38,7 +38,22 @@ export class AuthService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+        localStorage.removeItem('access_token');
         this.currentUserSubject.next(null);
+    }
+
+    loginBE(username: string, password: string): Observable<boolean> {
+      return this.http.post<{token: string}>('/api/auth', {username, password})
+      .pipe(
+        map(result => {
+          localStorage.setItem('access_token', result.token);
+          return true;
+        })
+      );
+    }
+
+    public get loggedIn(): boolean {
+      return (localStorage.getItem('access_token') !== null);
     }
 
 }
