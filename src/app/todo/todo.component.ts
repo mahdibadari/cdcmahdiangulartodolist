@@ -1,3 +1,4 @@
+import { Task } from './../model/task';
 import { FormsModule } from '@angular/forms';
 import { TodoService } from '../service/todo.service';
 import { MessageService } from '../service/message.service';
@@ -22,15 +23,22 @@ export class TodoComponent implements OnInit {
     descriptionField: new FormControl(''),
     deadlineField: new FormControl(''),
   });
+  StudentData: any = [];
 
   ngOnInit() {
     this.getTodoList();
+    //this.tryRest();
+  }
+  tryRest() {
+    this.todoService.tryRest().subscribe(data => {
+      this.StudentData = data;
+      console.log(data);
+    });
   }
 
   getTodoList(): void {
     this.todoService.getTodoList().subscribe(todolist => {
       this.todoList = todolist.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
-      console.log(this.todoList);
     });
   }
 

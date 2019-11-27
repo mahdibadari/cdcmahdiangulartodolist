@@ -14,14 +14,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { DocumentComponent } from './document/document.component';
+import { DocumentListComponent } from './document-list/document-list.component';
+import { DocumenthostComponent } from './documenthost/documenthost.component';
 
+const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
     TodoComponent,
     TododetailComponent,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    DocumentComponent,
+    DocumentListComponent,
+    DocumenthostComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +39,8 @@ import { LoginComponent } from './login/login.component';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
     ),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
