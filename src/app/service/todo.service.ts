@@ -1,3 +1,4 @@
+import { Task } from './../model/task';
 import { ToDo } from '../model/todo';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -5,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { MessageService } from './message.service';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +17,26 @@ export class TodoService {
   constructor(
     private messageService: MessageService,
     private http: HttpClient,
+    private route: ActivatedRoute
   ) { }
 
   private todolistUrl = 'api/todolist';
 
+  private nodeTaskUrl = 'http://localhost:4444/tasks';
+  private subscriber: any;
+
+
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders().set('Content-Type', 'application/json')
   };
+
+  tryRest() {
+    return this.http.get<Task[]>(this.nodeTaskUrl)
+    .pipe(
+      tap(_ => this.log('fetched todo list')),
+      catchError(this.handleError<Task[]>('getTodoList', []))
+    );
+  }
 
   getTodoList(): Observable<ToDo[]> {
     this.messageService.add('TodoService: fetched todo list');
@@ -72,8 +88,8 @@ export class TodoService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.log(error);
-      this.log('${operation} failed: ${error.message}');
+      //console.log(error);
+      //this.log('${operation} failed: ${error.message}');
       return of(result);
     };
   }

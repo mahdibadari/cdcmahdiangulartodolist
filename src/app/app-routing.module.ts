@@ -1,3 +1,5 @@
+import { StudentlistComponent } from './studentlist/studentlist.component';
+import { DocumenthostComponent } from './documenthost/documenthost.component';
 import { AuthGuard } from './helpers/AuthGuard';
 import { LoginComponent } from './login/login.component';
 import { TododetailComponent } from './tododetail/tododetail.component';
@@ -11,7 +13,9 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'tododetail/:id', component: TododetailComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent}
+  {path: 'login', component: LoginComponent},
+  {path: 'documenthost', component: DocumenthostComponent},
+  {path: 'students', component: StudentlistComponent}
 ];
 
 @NgModule({
