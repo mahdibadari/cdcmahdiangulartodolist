@@ -36,15 +36,15 @@ const config: SocketIoConfig = { url: 'http://localhost:4444', options: {} };
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(
+    /* HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, {dataEncapsulation: false}
-    ),
+    ), */
     ReactiveFormsModule,
     SocketIoModule.forRoot(config)
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    /* { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}, */
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]
