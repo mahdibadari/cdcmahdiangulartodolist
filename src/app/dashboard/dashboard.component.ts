@@ -11,15 +11,12 @@ import { first } from 'rxjs/operators';
 })
 export class DashboardComponent implements OnInit {
   loading = false;
-  users: Credential[];
-  constructor(private credentialService: CredentialService) { }
+  users: Credential;
+  constructor(private credentialService: CredentialService, private authService: AuthService) { }
 
   ngOnInit() {
     this.loading = true;
-    this.credentialService.getAll().pipe(first()).subscribe(users => {
-      this.loading = false;
-      this.users = users;
-    });
+    this.users = JSON.parse(localStorage.getItem('currentUser'));
   }
 
 }

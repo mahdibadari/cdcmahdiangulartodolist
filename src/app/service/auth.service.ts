@@ -43,10 +43,11 @@ export class AuthService {
     }
 
     loginBE(username: string, password: string): Observable<boolean> {
-      return this.http.post<{token: string}>('/api/auth', {username, password})
+      return this.http.post<any>(`${environment.apiUrl}/auth/login`, {username, password})
       .pipe(
         map(result => {
-          localStorage.setItem('access_token', result.token);
+          localStorage.setItem('currentUser', JSON.stringify(result.data));
+          localStorage.setItem('access_token', result.data.token);
           return true;
         })
       );
