@@ -48,7 +48,8 @@ export class AuthService {
         map(result => {
           localStorage.setItem('currentUser', JSON.stringify(result.data));
           localStorage.setItem('access_token', result.data.token);
-          return true;
+          this.currentUserSubject.next(result.data);
+          return result.data;
         })
       );
     }
