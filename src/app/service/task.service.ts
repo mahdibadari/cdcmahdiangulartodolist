@@ -1,23 +1,22 @@
-import { Student } from './../model/student';
+import { Task } from './../model/task';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import {environment} from '../helpers/enviroment';
+import { environment } from '../helpers/enviroment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StudentService {
+export class TaskService {
 
   endpoint = 'http://localhost:4000/api';
   headers = new HttpHeaders().set('Content-Type', 'application/json').set('x-access-token', localStorage.getItem('access_token'));
 
   constructor(private http: HttpClient) { }
 
-  // Add student
-  AddStudent(data: Student): Observable<any> {
-    const API_URL = `${this.endpoint}/add-student`;
+  AddTasks(data: Task): Observable<any> {
+    const API_URL = `${environment.apiUrl}/todo/tasks`;
     return this.http.post(API_URL, data)
       .pipe(
         catchError(this.errorMgmt)
@@ -25,14 +24,14 @@ export class StudentService {
   }
 
   // Get all students
-  GetStudents() {
-    const API_URL = `${environment.apiUrl}/student/`;
+  GetTasks() {
+    const API_URL = `${environment.apiUrl}/todo/tasks`;
     return this.http.get(API_URL, { headers: this.headers });
   }
 
   // Get student
-  GetStudent(id): Observable<any> {
-    const API_URL = `${environment.apiUrl}/student/read-student/${id}`;
+  GetTask(id): Observable<any> {
+    const API_URL = `${environment.apiUrl}/todo/tasks/${id}`;
     return this.http.get(API_URL, { headers: this.headers }).pipe(
       map((res: Response) => {
         return res || {};
@@ -42,16 +41,16 @@ export class StudentService {
   }
 
   // Update student
-  UpdateStudent(id, data: Student): Observable<any> {
-    const API_URL = `${this.endpoint}/update/${id}`;
+  UpdateTask(id, data: Task): Observable<any> {
+    const API_URL = `${environment.apiUrl}/todo/tasks/${id}`;
     return this.http.put(API_URL, data, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     );
   }
 
   // Delete student
-  DeleteStudent(id): Observable<any> {
-    const API_URL = `${this.endpoint}/delete-student/${id}`;
+  DeleteTask(id): Observable<any> {
+    const API_URL = `${environment.apiUrl}/todo/tasks/${id}`;
     return this.http.delete(API_URL).pipe(
       catchError(this.errorMgmt)
     );
@@ -70,5 +69,4 @@ export class StudentService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
-
 }

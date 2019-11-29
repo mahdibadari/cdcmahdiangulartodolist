@@ -5,6 +5,7 @@ import { MessageService } from '../service/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
 import { ToDo } from '../model/todo';
+import { TaskService } from '../service/task.service';
 
 @Component({
   selector: 'app-todo',
@@ -13,11 +14,13 @@ import { ToDo } from '../model/todo';
 })
 export class TodoComponent implements OnInit {
 
-  constructor(private todoService: TodoService) { }
+  constructor(private todoService: TodoService, private taskService: TaskService) { }
 
   selectedToDo: ToDo;
   todoList: ToDo[];
   descriptionError: string;
+
+  tasks: any = [];
 
   todoForm = new FormGroup({
     descriptionField: new FormControl(''),
@@ -26,13 +29,9 @@ export class TodoComponent implements OnInit {
   StudentData: any = [];
 
   ngOnInit() {
-    this.getTodoList();
-    //this.tryRest();
-  }
-  tryRest() {
-    this.todoService.tryRest().subscribe(data => {
-      this.StudentData = data;
-      console.log(data);
+    this.taskService.GetTasks().subscribe(data => {
+      this.tasks = data;
+      this.tasks = this.tasks.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
     });
   }
 
@@ -43,10 +42,10 @@ export class TodoComponent implements OnInit {
   }
 
   sortToDoListByLatest(): void {
-    this.todoList = this.todoList.sort((a, b) => (a.deadline < b.deadline) ? 1 : -1);
+    this.tasks = this.tasks.sort((a, b) => (a.deadline < b.deadline) ? 1 : -1);
   }
   sortToDoListByEarliest(): void {
-    this.todoList = this.todoList.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
+    this.tasks = this.tasks.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
   }
 
   add(description: string, deadline: Date): void {
@@ -64,22 +63,22 @@ export class TodoComponent implements OnInit {
         return;
       }
     }
-    this.todoService.addToDo({description, deadline} as ToDo)
+    this.taskService.AddTasks({description, deadline} as Task)
       .subscribe(todo => {
-        this.todoList.push(todo);
-        this.todoList.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
+        this.tasks.push(todo);
+        this.tasks.sort((a, b) => (a.deadline > b.deadline) ? 1 : -1);
         this.todoForm.setValue({
           descriptionField: '',
           deadlineField: ''
         });
       });
   }
-  updateStatus(todo: ToDo): void {
-    this.todoService.updateToDo(todo).subscribe();
+  updateStatus(task: Task): void {
+    this.taskService.UpdateTask(task._id, task).subscribe();
   }
-  delete(todo: ToDo): void {
-    this.todoList = this.todoList.filter(t => t !== todo);
-    this.todoService.deleteToDo(todo).subscribe();
+  delete(task: Task): void {
+    this.tasks = this.tasks.filter(t => t !== task);
+    this.taskService.DeleteTask(task._id).subscribe();
   }
 
 }

@@ -1,3 +1,5 @@
+import { Task } from './../model/task';
+import { TaskService } from './../service/task.service';
 import { TodoService } from '../service/todo.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -13,13 +15,15 @@ import { DatePipe } from '@angular/common';
 })
 export class TododetailComponent implements OnInit {
   todo: ToDo;
+  task: Task;
   descriptionError: string;
 
   constructor(
     private route: ActivatedRoute,
     private todoService: TodoService,
     private location: Location,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private taskService: TaskService
   ) { }
 
   ngOnInit() {
@@ -28,16 +32,16 @@ export class TododetailComponent implements OnInit {
 
   getTodo(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.todoService.getToDo(id)
-      .subscribe(todo => {
-        this.todo = this.updateToDo(todo);
+    this.taskService.GetTask(id)
+      .subscribe(task => {
+        this.task = this.upgradeTask(task);
       });
   }
 
-  updateToDo(todo: ToDo): ToDo {
-    const newToDo = todo;
-    newToDo.formattedDeadline = this.datepipe.transform(todo.deadline, 'yyyy-MM-dd');
-    return newToDo;
+  upgradeTask(task: Task): Task {
+    const newTask = task;
+    newTask.formattedDeadline = this.datepipe.transform(task.deadline, 'yyyy-MM-dd');
+    return newTask;
   }
 
   goBack(): void {
@@ -59,7 +63,8 @@ export class TododetailComponent implements OnInit {
         return;
       }
     }
-    this.todoService.updateToDo(this.todo)
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.taskService.UpdateTask(id, this.task)
       .subscribe(() => this.goBack());
   }
 

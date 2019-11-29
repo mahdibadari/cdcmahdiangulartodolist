@@ -1,1 +1,17 @@
 <p>studentlist works!</p>
+<table>
+  <tr>
+    <th id="studentno">No.</th>
+    <th id="tododesc">Name</th>
+    <th id="tododeadline">Email</th>
+    <th id="todostatus">Gender</th>
+    <th id="tododelete">Date of Birth</th>
+  </tr>
+  <tr *ngFor="let student of StudentData; let i = index" >
+    <td>{{i+1}}</td>
+    <td>{{student.student_name}}</td>
+    <td>{{student.student_email}}</td>
+    <td>{{student.gender}}</td>
+    <td>{{student.dob | date: "dd MMMM y"}}</td>
+  </tr>
+</table>

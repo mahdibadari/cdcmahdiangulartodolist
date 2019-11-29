@@ -4,7 +4,7 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
-const users: Credential[] = [{ id: 1, email: 'test@test.com', password: 'test', firstname: 'Test', lastname: 'User' }];
+const users: Credential[] = [{ _id: '1', email: 'test@test.com', password: 'test', firstname: 'Test', lastname: 'User' }];
 @Injectable({
   providedIn: 'root'
 })
@@ -39,7 +39,7 @@ export class LogindataService implements HttpInterceptor  {
         const user = users.find(x => x.email === email && x.password === password);
         if (!user) { return error('Email or password is incorrect'); }
         return ok({
-            id: user.id,
+            _id: user._id,
             email: user.email,
             firstname: user.firstname,
             lastname: user.lastname,

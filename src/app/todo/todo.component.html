@@ -19,16 +19,16 @@
 <br/>
 <table>
   <tr>
-    <th id="todoid">ID</th>
+    <th id="todoid">No</th>
     <th id="tododesc">Description</th>
     <th id="tododeadline">Deadline</th>
     <th id="todostatus">Done</th>
     <th id="tododelete">Delete</th>
   </tr>
-  <tr *ngFor="let todo of todoList" >
-    <td><a routerLink="/tododetail/{{todo.id}}">
+  <tr *ngFor="let todo of tasks; let i = index" >
+    <td><a routerLink="/tododetail/{{todo._id}}">
       <span>
-        {{todo.id}}
+        {{i+1}}
       </span>
     </a></td>
     <td>{{todo.description}}</td>

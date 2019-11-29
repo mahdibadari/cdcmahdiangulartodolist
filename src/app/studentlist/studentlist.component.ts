@@ -11,14 +11,12 @@ export class StudentlistComponent implements OnInit {
 
   StudentData: any = [];
 
-  constructor(private studentApi: StudentService) {
-    this.studentApi.GetStudents().subscribe(data => {
-      console.log(data);
-      this.StudentData = data;
-    });
-   }
+  constructor(private studentApi: StudentService) { }
 
   ngOnInit() {
+    this.studentApi.GetStudents().subscribe(data => {
+      this.StudentData = data;
+    });
   }
 
 }
