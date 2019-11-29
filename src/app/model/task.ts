@@ -3,4 +3,5 @@ export class Task {
   description: string;
   deadline: Date;
   done: boolean;
+  formattedDeadline: string;
 }
