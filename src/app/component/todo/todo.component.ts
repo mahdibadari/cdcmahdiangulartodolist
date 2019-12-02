@@ -1,11 +1,11 @@
-import { Task } from './../model/task';
+import { Task } from '../../model/task';
 import { FormsModule } from '@angular/forms';
-import { TodoService } from '../service/todo.service';
-import { MessageService } from '../service/message.service';
+import { TodoService } from '../../service/todo.service';
+import { MessageService } from '../../service/message.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl  } from '@angular/forms';
-import { ToDo } from '../model/todo';
-import { TaskService } from '../service/task.service';
+import { ToDo } from '../../model/todo';
+import { TaskService } from '../../service/task.service';
 
 @Component({
   selector: 'app-todo',

@@ -1,5 +1,5 @@
-import { DocumentService } from './../service/document.service';
-import { Document } from './../model/document';
+import { DocumentService } from '../../service/document.service';
+import { Document } from '../../model/document';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { startWith } from 'rxjs/operators';

@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="{{action}} Description" matInput [(ngModel)]="local_data.description">
+  </mat-form-field>
+  <mat-form-field *ngIf="action != 'Delete';">
+    <input type="date" placeholder="{{action}} Deadline" matInput [(ngModel)]="local_data.formattedDeadline">
+  </mat-form-field>
+  <mat-checkbox *ngIf="action != 'Delete';" [(ngModel)]="local_data.done" value="" color="primary">Done</mat-checkbox>
+  <ng-template #elseTemplate>
+    Sure to delete this task?
+  </ng-template>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="doAction()">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancel</button>
+</div>

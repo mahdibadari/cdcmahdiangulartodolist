@@ -1,4 +1,4 @@
-import { DocumentService } from './../service/document.service';
+import { DocumentService } from '../../service/document.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 

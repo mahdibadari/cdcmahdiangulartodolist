@@ -1,6 +1,6 @@
-import { AuthService } from './../service/auth.service';
-import { CredentialService } from './../service/credential.service';
-import { Credential } from './../model/credential';
+import { AuthService } from '../../service/auth.service';
+import { CredentialService } from '../../service/credential.service';
+import { Credential } from '../../model/credential';
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 

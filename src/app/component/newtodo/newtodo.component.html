@@ -1,0 +1,46 @@
+<!-- app.component.html -->
+<div class="container text-center" style="padding-top: 50px;">
+
+  <button style="float: right;" mat-button (click)="openDialog('Add',{})" mat-flat-button color="primary">Add Row</button>
+
+  <table mat-table [dataSource]="dataSource" #mytable class="my-table mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="no">
+      <th style="padding: 15px;" mat-header-cell *matHeaderCellDef> ID </th>
+      <td style="padding: 15px;" mat-cell *matCellDef="let element"> {{element._id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="description">
+      <th style="padding: 15px;" mat-header-cell *matHeaderCellDef> Description </th>
+      <td style="padding: 15px;" mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deadline">
+      <th style="padding: 15px;" mat-header-cell *matHeaderCellDef> Deadline </th>
+      <td style="padding: 15px;" mat-cell *matCellDef="let element"> {{element.deadline | date: "dd MMMM y"}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="done">
+      <th style="padding: 15px;" mat-header-cell *matHeaderCellDef> Done </th>
+      <td style="padding: 15px;" mat-cell *matCellDef="let element"> {{element.done}} </td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th style="padding: 15px;" mat-header-cell *matHeaderCellDef> Action </th>
+      <td style="padding: 15px;" mat-cell *matCellDef="let element" class="action-link">
+        <a (click)="openDialog('Update',element)">Edit</a> |
+        <a (click)="openDialog('Delete',element)">Delete</a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

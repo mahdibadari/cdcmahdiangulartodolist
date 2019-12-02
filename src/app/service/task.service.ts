@@ -16,15 +16,17 @@ export class TaskService {
   constructor(private http: HttpClient) { }
 
   AddTasks(data: Task): Observable<any> {
+    console.log(data);
     const API_URL = `${environment.apiUrl}/todo/tasks`;
-    return this.http.post(API_URL, data)
+    console.log(API_URL);
+    return this.http.post(API_URL, data, { headers: this.headers })
       .pipe(
         catchError(this.errorMgmt)
       );
   }
 
   // Get all students
-  GetTasks() {
+  GetTasks(): Observable<any> {
     const API_URL = `${environment.apiUrl}/todo/tasks`;
     return this.http.get(API_URL, { headers: this.headers });
   }
@@ -43,6 +45,7 @@ export class TaskService {
   // Update student
   UpdateTask(id, data: Task): Observable<any> {
     const API_URL = `${environment.apiUrl}/todo/tasks/${id}`;
+    console.log(API_URL);
     return this.http.put(API_URL, data, { headers: this.headers }).pipe(
       catchError(this.errorMgmt)
     );

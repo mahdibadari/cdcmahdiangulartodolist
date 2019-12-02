@@ -1,10 +1,10 @@
-import { Task } from './../model/task';
-import { TaskService } from './../service/task.service';
-import { TodoService } from '../service/todo.service';
+import { Task } from '../../model/task';
+import { TaskService } from '../../service/task.service';
+import { TodoService } from '../../service/todo.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
-import { ToDo } from '../model/todo';
+import { ToDo } from '../../model/todo';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 export class TododetailComponent implements OnInit {
   todo: ToDo;
   task: Task;
+  prodId: string;
   descriptionError: string;
 
   constructor(
@@ -27,12 +28,14 @@ export class TododetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.route.params.subscribe((params: Params) => {
+      this.prodId = params['id'];
+   });
     this.getTodo();
   }
 
   getTodo(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.taskService.GetTask(id)
+    this.taskService.GetTask(this.prodId)
       .subscribe(task => {
         this.task = this.upgradeTask(task);
       });
@@ -49,22 +52,21 @@ export class TododetailComponent implements OnInit {
   }
 
   save(): void {
-    this.todo.deadline = new Date(this.todo.formattedDeadline);
-    if (!this.todo.description) {
+    this.task.deadline = new Date(this.task.formattedDeadline);
+    if (!this.task.description) {
       this.descriptionError = 'Description must not be empty';
       return;
     }
-    if (!this.todo.deadline) {
+    if (!this.task.deadline) {
       this.descriptionError = 'Deadline must not be empty';
       return;
-    } else if (new Date(this.todo.deadline) < new Date()) {
-      if (new Date(this.todo.deadline).toDateString() !== new Date().toDateString()) {
+    } else if (new Date(this.task.deadline) < new Date()) {
+      if (new Date(this.task.deadline).toDateString() !== new Date().toDateString()) {
         this.descriptionError = 'Deadline date must be today or later';
         return;
       }
     }
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.taskService.UpdateTask(id, this.task)
+    this.taskService.UpdateTask(this.prodId, this.task)
       .subscribe(() => this.goBack());
   }
 
