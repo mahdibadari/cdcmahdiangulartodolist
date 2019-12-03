@@ -1,6 +1,6 @@
+import { JwtInterceptor } from './helpers/jwt.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StudentlistComponent } from './component/studentlist/studentlist.component';
-import { fakeBackendProvider } from './service/logindata.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { TodoComponent } from './component/todo/todo.component';
 import { TododetailComponent } from './component/tododetail/tododetail.component';
 import { DashboardComponent } from './component/dashboard/dashboard.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './component/login/login.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -72,8 +72,12 @@ export function tokenGetter() {
     MatCheckboxModule
   ],
   providers: [
-    fakeBackendProvider,
-    DatePipe
+    DatePipe,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [
     DialogboxComponent

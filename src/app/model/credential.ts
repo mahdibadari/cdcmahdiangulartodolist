@@ -5,4 +5,5 @@ export class Credential {
   firstname: string;
   lastname: string;
   token?: string;
+  token_expiry: string;
 }

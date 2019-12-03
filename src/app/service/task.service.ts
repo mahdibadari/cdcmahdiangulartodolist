@@ -11,7 +11,7 @@ import { environment } from '../helpers/enviroment';
 export class TaskService {
 
   endpoint = 'http://localhost:4000/api';
-  headers = new HttpHeaders().set('Content-Type', 'application/json').set('x-access-token', localStorage.getItem('access_token'));
+  headers = new HttpHeaders().set('Content-Type', 'application/json');//.set('x-access-token', localStorage.getItem('access_token'));
 
   constructor(private http: HttpClient) { }
 

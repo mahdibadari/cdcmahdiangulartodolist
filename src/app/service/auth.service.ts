@@ -48,6 +48,7 @@ export class AuthService {
         map(result => {
           localStorage.setItem('currentUser', JSON.stringify(result.data));
           localStorage.setItem('access_token', result.data.token);
+          localStorage.setItem('token_expiry', new Date(result.data.tokenExpiry).toLocaleString());
           this.currentUserSubject.next(result.data);
           return result.data;
         })
